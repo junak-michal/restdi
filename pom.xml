@@ -18,11 +18,11 @@
                 </configuration>
             </plugin>
         </plugins>
-</build>
+    </build>
 
-<modules>
-	<module>springrest</module>
-	<module>easycdi</module>
-    <module>core</module>
-</modules>
+    <modules>
+        <module>springrest</module>
+        <module>easycdi</module>
+        <module>core</module>
+    </modules>
 </project>

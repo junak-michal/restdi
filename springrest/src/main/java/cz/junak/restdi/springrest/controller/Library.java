@@ -27,9 +27,9 @@ public class Library {
         return info;
     }
 
-    @RequestMapping(value = "/book/{shelveName}/{bookId}", produces = "application/json")
-    public Book book(@PathVariable String shelveName, @PathVariable int bookId) {
-        Shelf shelf = shelvesByName.get(shelveName);
+    @RequestMapping(value = "/book/{shelfName}/{bookId}", produces = "application/json")
+    public Book book(@PathVariable String shelfName, @PathVariable int bookId) {
+        Shelf shelf = shelvesByName.get(shelfName);
         if (shelf != null) {
             return shelf.byId(bookId);
         }
