@@ -26,6 +26,10 @@ public class Shelf {
         return booksById.get(id);
     }
 
+    public void put(int id, Book book) {
+        booksById.put(id, book);
+    }
+
     /**
      * Constructs new Shelf from csv with following format: ${id},${book name},${book author}
      * @param csvName Name of the csv file that can be loaded as a resource from this class.

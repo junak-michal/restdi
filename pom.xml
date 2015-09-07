@@ -23,6 +23,7 @@
     <modules>
         <module>springrest</module>
         <module>easycdi</module>
+        <module>everguice</module>
         <module>core</module>
     </modules>
 </project>

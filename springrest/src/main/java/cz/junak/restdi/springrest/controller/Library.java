@@ -1,10 +1,12 @@
 package cz.junak.restdi.springrest.controller;
 
+import cz.junak.restdi.core.exception.BookNotFoundException;
 import cz.junak.restdi.core.model.Book;
 import cz.junak.restdi.core.model.LibraryInfo;
 import cz.junak.restdi.core.Shelf;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
@@ -34,5 +36,15 @@ public class Library {
             return shelf.byId(bookId);
         }
         return null;
+    }
+
+    @RequestMapping(value = "/book/error")
+    public Book error() throws BookNotFoundException {
+        throw new BookNotFoundException(42);
+    }
+
+    @RequestMapping(value = "/book/{shelfName}/{bookId}", consumes = "application/json", method = RequestMethod.PUT)
+    public void putBook(@PathVariable String shelfName, @PathVariable int bookId) {
+
     }
 }

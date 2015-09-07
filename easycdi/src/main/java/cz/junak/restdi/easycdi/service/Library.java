@@ -1,10 +1,10 @@
 package cz.junak.restdi.easycdi.service;
 
 import cz.junak.restdi.core.Shelf;
+import cz.junak.restdi.core.exception.BookNotFoundException;
 import cz.junak.restdi.core.model.Book;
 import cz.junak.restdi.core.model.LibraryInfo;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -12,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.Map;
 
 @Path("/library")
@@ -41,5 +40,11 @@ public class Library {
             return shelf.byId(bookId);
         }
         return null;
+    }
+
+    @GET
+    @Path("/book/error")
+    public Book error() throws BookNotFoundException {
+        throw new BookNotFoundException(42);
     }
 }
