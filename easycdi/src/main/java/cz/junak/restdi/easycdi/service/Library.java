@@ -7,10 +7,7 @@ import cz.junak.restdi.core.model.LibraryInfo;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.Map;
 
@@ -46,5 +43,15 @@ public class Library {
     @Path("/book/error")
     public Book error() throws BookNotFoundException {
         throw new BookNotFoundException(42);
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/book/{shelfName}/{bookId}")
+    public void putBook(@PathParam("shelfName") String shelfName, @PathParam("bookId") int bookId, Book book) {
+        Shelf shelf = shelvesByName.get(shelfName);
+        if (shelf != null) {
+            shelf.put(bookId, book);
+        }
     }
 }

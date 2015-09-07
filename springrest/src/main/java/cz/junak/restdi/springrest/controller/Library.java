@@ -4,10 +4,7 @@ import cz.junak.restdi.core.exception.BookNotFoundException;
 import cz.junak.restdi.core.model.Book;
 import cz.junak.restdi.core.model.LibraryInfo;
 import cz.junak.restdi.core.Shelf;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -24,12 +21,12 @@ public class Library {
         this.shelvesByName.putAll(shelvesByName);
     }
 
-    @RequestMapping(value = "/info", produces = "application/json")
+    @RequestMapping(value = "/info", produces = "application/json", method = RequestMethod.GET)
     public LibraryInfo info() {
         return info;
     }
 
-    @RequestMapping(value = "/book/{shelfName}/{bookId}", produces = "application/json")
+    @RequestMapping(value = "/book/{shelfName}/{bookId}", method = RequestMethod.GET, produces = "application/json")
     public Book book(@PathVariable String shelfName, @PathVariable int bookId) {
         Shelf shelf = shelvesByName.get(shelfName);
         if (shelf != null) {
@@ -38,13 +35,16 @@ public class Library {
         return null;
     }
 
-    @RequestMapping(value = "/book/error")
+    @RequestMapping(value = "/book/error", method = RequestMethod.GET)
     public Book error() throws BookNotFoundException {
         throw new BookNotFoundException(42);
     }
 
     @RequestMapping(value = "/book/{shelfName}/{bookId}", consumes = "application/json", method = RequestMethod.PUT)
-    public void putBook(@PathVariable String shelfName, @PathVariable int bookId) {
-
+    public void putBook(@PathVariable String shelfName, @PathVariable int bookId, @RequestBody Book book) {
+        Shelf shelf = shelvesByName.get(shelfName);
+        if (shelf != null) {
+            shelf.put(bookId, book);
+        }
     }
 }
