@@ -1,5 +1,6 @@
 package cz.junak.restdi.easycdi.service;
 
+import cz.junak.restdi.easycdi.service.second.OlomoucLibrary;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -13,7 +14,9 @@ public class EasyCDIApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> result = new HashSet<Class<?>>();
-        result.add(Library.class);
+        result.add(LibraryEndpoint.class);
+        result.add(OlomoucLibrary.class);
         return result;
     }
+    
 }
