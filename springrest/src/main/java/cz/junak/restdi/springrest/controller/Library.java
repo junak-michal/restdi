@@ -7,6 +7,8 @@ import cz.junak.restdi.core.Shelf;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @ResponseBody
 @RequestMapping("/library")
@@ -38,6 +40,16 @@ public class Library {
     @RequestMapping(value = "/book/error", method = RequestMethod.GET)
     public Book error() throws BookNotFoundException {
         throw new BookNotFoundException(42);
+    }
+    
+    @RequestMapping(value = "/headers")
+    public String httpHeaders(@RequestHeader("User-Agent") String userAgent, @RequestHeader Map<String, String> all) {
+        StringBuilder response = new StringBuilder();
+        response.append("User agent is ").append(userAgent);
+        for(String header : all.keySet()) {
+            response.append(header).append(" : ").append(all.get(header)).append("\n");
+        }
+        return response.toString();
     }
 
     @RequestMapping(value = "/book/{shelfName}/{bookId}", consumes = "application/json", method = RequestMethod.PUT)
