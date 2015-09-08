@@ -7,7 +7,10 @@ import cz.junak.restdi.core.Shelf;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @ResponseBody
@@ -40,6 +43,17 @@ public class Library {
     @RequestMapping(value = "/book/error", method = RequestMethod.GET)
     public Book error() throws BookNotFoundException {
         throw new BookNotFoundException(42);
+    }
+    
+    @RequestMapping(value = "/book/error2", method = RequestMethod.GET)
+    public Book error2() throws ExceptionTest {
+        throw new ExceptionTest("Exception msg");
+    }
+    
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<ServerErrorInfo> handleException(HttpServletRequest request, Exception e) {
+        ServerErrorInfo info = new ServerErrorInfo(e.getMessage());
+        return new ResponseEntity<>(info, HttpStatus.NOT_FOUND);
     }
     
     @RequestMapping(value = "/headers")
